@@ -280,7 +280,6 @@ def current_pairings():
 @app.route('/submit_results', methods=['GET', 'POST'])
 def submit_results():
     if request.method == 'POST':
-        # Handle results submission
         conn = sqlite3.connect('league.db')
         cursor = conn.cursor()
 
@@ -298,19 +297,24 @@ def submit_results():
             player1_id = pairing[1]
             player2_id = pairing[2]
             result = request.form.get(f'result_{pairing_id}')  # Adjust naming to match
+
             if result:
-                cursor.execute('''
-                UPDATE pairings SET result = ? WHERE id = ?
-                ''', (result, pairing_id))
-                # Update player stats
-                update_player_stats(player1_id, result)
-                # Update the opponent's stats
-                if result == "win":
-                    update_player_stats(player2_id, "lose")
-                elif result == "lose":
-                    update_player_stats(player2_id, "win")
-                elif result == "tie":
+                if result == "tie":
+                    cursor.execute('''
+                    UPDATE pairings SET result = ? WHERE id = ?
+                    ''', ("tie", pairing_id))
+                    update_player_stats(player1_id, "tie")
                     update_player_stats(player2_id, "tie")
+                else:  # "win" or "lose"
+                    winner_id = player1_id if result == "player1" else player2_id
+                    loser_id = player2_id if result == "player1" else player1_id
+                    
+                    cursor.execute('''
+                    UPDATE pairings SET result = ? WHERE id = ?
+                    ''', ("win" if result == "player1" else "lose", pairing_id))
+                    
+                    update_player_stats(winner_id, "win")
+                    update_player_stats(loser_id, "lose")
 
         conn.commit()
         conn.close()
