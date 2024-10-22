@@ -9,8 +9,30 @@ services:
     ports:
       - 5000:5000
     command: |
-      sh -c "pip install --no-cache-dir Flask &&
+      sh -c "pip install --no-cache-dir Flask psycopg2-binary python-dotenv &&
               python app.py"
     environment:
       - FLASK_ENV=development
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    depends_on:
+      - db # Ensure the database is started before the app
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data
+      - ./data:/app/data
+volumes:
+  postgres_data: null
+    # Named volume for PostgreSQL data storage
+
 networks: {}
