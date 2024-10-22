@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Results</title>
+    <link rel="stylesheet" href="static/styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <h1>Submit Results for Current Round</h1>
+    <form method="POST">
+        <table>
+            <tr>
+                <th>Player 1</th>
+                <th>Player 2</th>
+                <th>Result</th>
+            </tr>
+            {% for pairing in pairings %}
+            <tr>
+                <td>{{ pairing[0] }}</td>
+                <td>{{ pairing[1] }}</td>
+                <td>
+                    <select name="result_{{ loop.index }}">
+                        <option value="">Select Result</option>
+                        <option value="win">Win</option>
+                        <option value="lose">Lose</option>
+                        <option value="tie">Tie</option>
+                    </select>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Submit Results</button>
+    </form>
+    <nav>
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  game-league:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./data:/app/data
+      - .:/app # Mount the current directory
+    ports:
+      - 5000:5000
+    command: |
+      sh -c "pip install --no-cache-dir Flask &&
+              python app.py"
+    environment:
+      - FLASK_ENV=development
+networks: {}

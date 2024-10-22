@@ -1,0 +1,294 @@
+from flask import Flask, render_template, request, redirect, url_for
+import sqlite3
+
+app = Flask(__name__)
+
+# Function to create the database (if needed)
+def create_database():
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+
+    # Create players table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS players (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        team TEXT NOT NULL,
+        games_played INTEGER DEFAULT 0,
+        games_won INTEGER DEFAULT 0,
+        games_lost INTEGER DEFAULT 0,
+        games_tied INTEGER DEFAULT 0,
+        rounds_played INTEGER DEFAULT 0
+    )
+    ''')
+
+    # Create pairings table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS pairings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        player1_id INTEGER,
+        player2_id INTEGER,
+        round_number INTEGER,
+        result TEXT,
+        FOREIGN KEY (player1_id) REFERENCES players(id),
+        FOREIGN KEY (player2_id) REFERENCES players(id)
+    )
+    ''')
+
+    conn.commit()
+    conn.close()
+    
+def get_current_round_number():
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT MAX(round_number) FROM pairings")
+    current_round = cursor.fetchone()[0] or 0  # Default to 0 if no rounds exist
+    conn.close()
+    return current_round
+
+def has_played_against(player1_id, player2_id):
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM pairings WHERE (player1_id = ? AND player2_id = ?) OR (player1_id = ? AND player2_id = ?)", 
+                   (player1_id, player2_id, player2_id, player1_id))
+    played_count = cursor.fetchone()[0]
+    conn.close()
+    return played_count > 0
+
+def add_player(name, team):
+    conn = sqlite3.connect('league.db')
+    c = conn.cursor()
+    c.execute('INSERT INTO players (name, team) VALUES (?, ?)', (name, team))
+    conn.commit()
+    conn.close()
+
+def save_pairing(player1_id, player2_id, round_number):
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+    INSERT INTO pairings (player1_id, player2_id, round_number)
+    VALUES (?, ?, ?)
+    ''', (player1_id, player2_id, round_number))
+    conn.commit()
+    conn.close()
+
+def update_player_stats(player_id, result):
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+    
+    if result == "win":
+        cursor.execute('''
+        UPDATE players SET games_played = games_played + 1, 
+                          games_won = games_won + 1, 
+                          rounds_played = rounds_played + 1 
+        WHERE id = ?
+        ''', (player_id,))
+    elif result == "lose":
+        cursor.execute('''
+        UPDATE players SET games_played = games_played + 1, 
+                          games_lost = games_lost + 1, 
+                          rounds_played = rounds_played + 1 
+        WHERE id = ?
+        ''', (player_id,))
+    elif result == "tie":
+        cursor.execute('''
+        UPDATE players SET games_played = games_played + 1, 
+                          games_tied = games_tied + 1, 
+                          rounds_played = rounds_played + 1 
+        WHERE id = ?
+        ''', (player_id,))
+    
+    conn.commit()
+    conn.close()
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/players')
+def players():
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM players")
+    players = cursor.fetchall()
+    conn.close()
+    print("Fetching players...")
+    return render_template('players.html', players=players)
+
+@app.route('/pairings', methods=['GET', 'POST'])
+def generate_pairings():
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+
+    # If it's a GET request, display the form
+    if request.method == 'GET':
+        # Fetch all players
+        cursor.execute("SELECT id, name FROM players")
+        players = cursor.fetchall()
+        conn.close()
+        return render_template('pairings.html', players=players)
+
+    # If it's a POST request, handle the form submission
+    round_number = get_current_round_number()
+
+    # Fetch all players again for processing requests
+    cursor.execute("SELECT id FROM players")
+    players = cursor.fetchall()
+
+    # Prepare to store game requests
+    player_requests = {}
+
+    # Collect the number of games requested from the form
+    for player in players:
+        player_id = player[0]
+        games_requested = request.form.get(f'games_requested_{player_id}', 0, type=int)
+        player_requests[player_id] = games_requested
+
+    # Separate players based on their requests
+    players_1_game = [player for player in player_requests if player_requests[player] >= 1]
+    players_2_games = [player for player in player_requests if player_requests[player] >= 2]
+    players_3_games = [player for player in player_requests if player_requests[player] > 2]
+
+    # Check existing pairings in the current round to prevent repeat matches
+    cursor.execute("SELECT player1_id, player2_id FROM pairings WHERE round_number = ?", (round_number,))
+    existing_pairings = cursor.fetchall()
+    existing_pairs_set = {(min(player1, player2), max(player1, player2)) for player1, player2 in existing_pairings}
+
+    # Pairing logic
+    pairings = []
+    paired_players = set()
+
+    # Step 1: Ensure everyone who wants at least 1 game gets paired first
+    for player in players_1_game:
+        if player not in paired_players:
+            for opponent in players_1_game:
+                if (player != opponent and opponent not in paired_players and
+                    (min(player, opponent), max(player, opponent)) not in existing_pairs_set):
+                    pairings.append((player, opponent))
+                    paired_players.add(player)
+                    paired_players.add(opponent)
+                    break
+
+    # Step 2: Pair players who want 2 games
+    for player in players_2_games:
+        if player not in paired_players:
+            for opponent in players_2_games:
+                if (player != opponent and opponent not in paired_players and
+                    (min(player, opponent), max(player, opponent)) not in existing_pairs_set):
+                    pairings.append((player, opponent))
+                    paired_players.add(player)
+                    paired_players.add(opponent)
+                    break
+
+    # Step 3: Allow players who want more than 2 games to be paired if there are extra requests
+    for player in players_3_games:
+        if player not in paired_players:
+            for opponent in players_1_game + players_2_games:
+                if (player != opponent and opponent not in paired_players and
+                    (min(player, opponent), max(player, opponent)) not in existing_pairs_set):
+                    pairings.append((player, opponent))
+                    paired_players.add(player)
+                    paired_players.add(opponent)
+                    break
+
+    # Insert the pairings into the database
+    for player1, player2 in pairings:
+        cursor.execute("INSERT INTO pairings (player1_id, player2_id, round_number) VALUES (?, ?, ?)",
+                       (player1, player2, round_number))
+
+    conn.commit()
+    conn.close()
+    return redirect('/current_pairings')  # Redirect to the current pairings page after generating
+
+    
+@app.route('/current_pairings')
+def current_pairings():
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+
+    # Get the current round number
+    round_number = get_current_round_number()
+
+    # Fetch pairings for the current round
+    cursor.execute("SELECT player1_id, player2_id FROM pairings WHERE round_number = ?", (round_number,))
+    pairings = cursor.fetchall()
+
+    # Fetch player names and store them in a dictionary
+    player_names = {}
+    cursor.execute("SELECT id, name FROM players")
+    for row in cursor.fetchall():
+        player_names[row[0]] = row[1]
+
+    conn.close()
+
+    # Prepare pairings with names
+    pairings_with_names = [(player_names[player1], player_names[player2]) for player1, player2 in pairings if player1 in player_names and player2 in player_names]
+
+    return render_template('current_pairings.html', pairings=pairings_with_names, round_number=round_number)
+
+
+@app.route('/submit_results', methods=['GET', 'POST'])
+def submit_results():
+    if request.method == 'POST':
+        # Handle results submission
+        conn = sqlite3.connect('league.db')
+        cursor = conn.cursor()
+
+        # Fetch all current pairings for the current round
+        cursor.execute('''
+        SELECT pairing.id, pairing.player1_id, pairing.player2_id
+        FROM pairings pairing
+        WHERE pairing.round_number = (SELECT MAX(round_number) FROM pairings)
+        ''')
+        pairings = cursor.fetchall()
+
+        # Iterate over each pairing to get results
+        for pairing in pairings:
+            pairing_id = pairing[0]
+            player1_id = pairing[1]
+            player2_id = pairing[2]
+            result = request.form.get(f'result_{pairing_id}')  # Adjust naming to match
+            if result:
+                cursor.execute('''
+                UPDATE pairings SET result = ? WHERE id = ?
+                ''', (result, pairing_id))
+                # Update player stats
+                update_player_stats(player1_id, result)
+                # Update the opponent's stats
+                if result == "win":
+                    update_player_stats(player2_id, "lose")
+                elif result == "lose":
+                    update_player_stats(player2_id, "win")
+                elif result == "tie":
+                    update_player_stats(player2_id, "tie")
+
+        conn.commit()
+        conn.close()
+        return redirect(url_for('home'))
+
+    # Fetch pairings from the database for display
+    conn = sqlite3.connect('league.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+    SELECT p1.name AS player1_name, p2.name AS player2_name, pairing.id
+    FROM pairings pairing
+    JOIN players p1 ON pairing.player1_id = p1.id
+    JOIN players p2 ON pairing.player2_id = p2.id
+    WHERE pairing.round_number = (SELECT MAX(round_number) FROM pairings)
+    ''')
+    pairings = cursor.fetchall()
+    conn.close()
+
+    return render_template('submit_results.html', pairings=pairings)
+
+if __name__ == "__main__":
+    create_database()
+#    add_player('Jake', 'Boozin for a Brusin')
+#    add_player('Will', 'Gnome Mercy')
+#    add_player('Wilson', 'Cold Bloody Scabs')
+#    add_player('Brett', 'Biguns')
+#    add_player('Mike', 'Zarr Fire-Breathers')
+#    add_player('Nathan', 'Chittering Crawlers')
+#    add_player('Nick', 'Powder Monkeys')
+#    add_player('Morgan', 'Nine Inch Flails')
+    app.run(debug=True, host='0.0.0.0', port=5000)  # Allow external access

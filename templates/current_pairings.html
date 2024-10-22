@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Current Pairings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Current Pairings for Round {{ round_number }}</h1>
+    
+    <h2>Total Scheduled Games: {{ total_scheduled }}</h2>
+    <h2>Unreported Games: {{ unreported_count }}</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Pairing ID</th>
+                <th>Player 1</th>
+                <th>Player 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pairing in pairings %}
+                <tr>
+                    <td>{{ pairing[0] }}</td>  <!-- Pairing ID -->
+                    <td>{{ pairing[1] }}</td>  <!-- Player 1 Name -->
+                    <td>{{ pairing[2] }}</td>  <!-- Player 2 Name -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('home') }}">Back to Home</a> <!-- Link to home page -->
+</body>
+</html>
