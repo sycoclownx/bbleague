@@ -3,4 +3,6 @@ This is a python web script to manage pairings for a blood bowl league based on 
 
 Can be published independently or using the Dockerfile or docker-compose file to generate a docker container. 
 
+Edit the .env file before running replaving the entries inside []
+
 
