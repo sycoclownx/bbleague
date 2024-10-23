@@ -81,30 +81,31 @@ def save_pairing(player1_id, player2_id, round_number):
         conn.commit()
 
 def update_player_stats(player_id, result):
-    with get_connection() as conn:
-        cursor = conn.cursor()
-        if result == "win":
-            cursor.execute('''
-            UPDATE players SET games_played = games_played + 1, 
-                              games_won = games_won + 1, 
-                              rounds_played = rounds_played + 1 
-            WHERE id = %s
-            ''', (player_id,))
-        elif result == "lose":
-            cursor.execute('''
-            UPDATE players SET games_played = games_played + 1, 
-                              games_lost = games_lost + 1, 
-                              rounds_played = rounds_played + 1 
-            WHERE id = %s
-            ''', (player_id,))
-        elif result == "tie":
-            cursor.execute('''
-            UPDATE players SET games_played = games_played + 1, 
-                              games_tied = games_tied + 1, 
-                              rounds_played = rounds_played + 1 
-            WHERE id = %s
-            ''', (player_id,))
-        conn.commit()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    if result == "win":
+        cursor.execute('''
+        UPDATE players SET games_won = games_won + 1, 
+                          rounds_played = rounds_played + 1 
+        WHERE id = ?
+        ''', (player_id,))
+    elif result == "lose":
+        cursor.execute('''
+        UPDATE players SET games_lost = games_lost + 1, 
+                          rounds_played = rounds_played + 1 
+        WHERE id = ?
+        ''', (player_id,))
+    elif result == "tie":
+        cursor.execute('''
+        UPDATE players SET games_tied = games_tied + 1, 
+                          rounds_played = rounds_played + 1 
+        WHERE id = ?
+        ''', (player_id,))
+    
+    conn.commit()
+    conn.close()
+
 
 @app.route('/')
 def home():
