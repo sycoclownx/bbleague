@@ -32,7 +32,6 @@ def create_database():
             id SERIAL PRIMARY KEY,
             name TEXT NOT NULL,
             team TEXT NOT NULL,
-            games_played INTEGER DEFAULT 0,
             games_won INTEGER DEFAULT 0,
             games_lost INTEGER DEFAULT 0,
             games_tied INTEGER DEFAULT 0,
