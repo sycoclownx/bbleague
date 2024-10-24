@@ -18,17 +18,17 @@ This Flask web application manages pairings for a Blood Bowl league, based on re
 ## Installation
 
 ### Local Setup
-1. Clone the repository:
+1. Clone the repository
 
-2. Create a virtual environment and activate it:
+2. Create a virtual environment and activate it
 
-3. Install the required packages:
+3. Install the required packages
 
 4. Set up your environment variables:
 - Copy the `.env.example` file to `.env`
 - Edit the `.env` file and replace the placeholders with your actual database credentials
 
-5. Initialize the database:
+5. Initialize the database
 
 ### Docker Setup
 1. Download contents of git to your local machine.
