@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pairing Input</title>
-    <link rel="stylesheet" href="static/style.css"> <!-- Link to your CSS file -->
+    <title>Generate Pairings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Generate Pairings</h1>
-    <form method="POST">
+    <h1>Choose Number of Games</h1>
+    <form method="POST" action="{{ url_for('generate_pairings') }}">
         <table>
             <tr>
                 <th>Player Name</th>
@@ -18,15 +18,17 @@
             <tr>
                 <td>{{ player[1] }}</td>
                 <td>
-                    <input type="number" name="{{ player[0] }}" min="0" max="5" value="0">
+                    <select name="{{ player[0] }}">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
                 </td>
             </tr>
             {% endfor %}
         </table>
         <button type="submit">Generate Pairings</button>
     </form>
-    <nav>
-        <a href="{{ url_for('home') }}">Back to Home</a>
-    </nav>
+    <a href="{{ url_for('home') }}">Back to Home</a>
 </body>
 </html>

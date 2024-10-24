@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Current Pairings</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Current Pairings for Round {{ round_number }}</h1>
-    
-    <h2>Total Scheduled Games: {{ total_scheduled }}</h2>
-    <h2>Unreported Games: {{ unreported_count }}</h2>
-    
+
     <table>
         <thead>
             <tr>
@@ -20,15 +18,17 @@
             </tr>
         </thead>
         <tbody>
-            {% for pairing in pairings %}
+            {% for player1, player2, pairing_id in pairings %}
                 <tr>
-                    <td>{{ pairing[0] }}</td>  <!-- Pairing ID -->
-                    <td>{{ pairing[1] }}</td>  <!-- Player 1 Name -->
-                    <td>{{ pairing[2] }}</td>  <!-- Player 2 Name -->
+                    <td>{{ pairing_id }}</td>
+                    <td>{{ player1 }}</td>
+                    <td>{{ player2 }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('home') }}">Back to Home</a> <!-- Link to home page -->
+    <p>Total games scheduled: {{ total_scheduled }} / {{ total_requested }}</p>
+    <a href="{{ url_for('home') }}">Back to Home</a>
+    <a href="{{ url_for('generate_pairings') }}">Generate New Pairings</a>
 </body>
 </html>

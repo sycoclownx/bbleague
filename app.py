@@ -3,7 +3,7 @@ import random
 import os
 import traceback
 import time
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, current_app
 import psycopg2
 from dotenv import load_dotenv
 
@@ -80,30 +80,27 @@ def save_pairing(player1_id, player2_id, round_number):
         conn.commit()
 
 def update_player_stats(player_id, result):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    if result == "win":
-        cursor.execute('''
-        UPDATE players SET games_won = games_won + 1, 
-                          rounds_played = rounds_played + 1 
-        WHERE id = ?
-        ''', (player_id,))
-    elif result == "lose":
-        cursor.execute('''
-        UPDATE players SET games_lost = games_lost + 1, 
-                          rounds_played = rounds_played + 1 
-        WHERE id = ?
-        ''', (player_id,))
-    elif result == "tie":
-        cursor.execute('''
-        UPDATE players SET games_tied = games_tied + 1, 
-                          rounds_played = rounds_played + 1 
-        WHERE id = ?
-        ''', (player_id,))
-    
-    conn.commit()
-    conn.close()
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            if result == "win":
+                cursor.execute('''
+                UPDATE players SET games_won = games_won + 1, 
+                                  rounds_played = rounds_played + 1 
+                WHERE id = %s
+                ''', (player_id,))
+            elif result == "lose":
+                cursor.execute('''
+                UPDATE players SET games_lost = games_lost + 1, 
+                                  rounds_played = rounds_played + 1 
+                WHERE id = %s
+                ''', (player_id,))
+            elif result == "tie":
+                cursor.execute('''
+                UPDATE players SET games_tied = games_tied + 1, 
+                                  rounds_played = rounds_played + 1 
+                WHERE id = %s
+                ''', (player_id,))
+            conn.commit()
 
 
 @app.route('/')
@@ -136,86 +133,124 @@ def players():
         players = cursor.fetchall()
     return render_template('players.html', players=players)
 
+import logging
+from flask import current_app
 @app.route('/pairings', methods=['GET', 'POST'])
 def generate_pairings():
-    with get_connection() as conn:
-        cursor = conn.cursor()
-
-        if request.method == 'GET':
+    if request.method == 'GET':
+        with get_connection() as conn:
+            cursor = conn.cursor()
             cursor.execute("SELECT id, name FROM players")
             players = cursor.fetchall()
-            return render_template('pairings.html', players=players)
+        return render_template('pairing_input.html', players=players)
+    elif request.method == 'POST':
+        try:
+            with get_connection() as conn:
+                cursor = conn.cursor()
 
-        round_number = get_current_round_number() + 1
-        player_requests = {}
+                round_number = get_current_round_number() + 1
+                player_requests = {}
 
-        cursor.execute("SELECT id FROM players")
-        players = cursor.fetchall()
+                cursor.execute("SELECT id FROM players")
+                players = [player[0] for player in cursor.fetchall()]
 
-        for player in players:
-            player_id = player[0]
-            games_requested = request.form.get(f'games_requested_{player_id}', 0, type=int)
-            player_requests[player_id] = games_requested
+                total_games_requested = 0
+                for player_id in players:
+                    games_requested = min(int(request.form.get(f'{player_id}', 0)), 5)  # Allow up to 5 games
+                    player_requests[player_id] = games_requested
+                    total_games_requested += games_requested
 
-        cursor.execute("SELECT player1_id, player2_id FROM pairings WHERE round_number IN (%s, %s)", (round_number - 1, round_number - 2))
-        existing_pairings = cursor.fetchall()
-        existing_pairs_set = {(min(player1, player2), max(player1, player2)) for player1, player2 in existing_pairings}
+                # Get previous pairings
+                cursor.execute("SELECT player1_id, player2_id FROM pairings")
+                previous_pairings = set(tuple(sorted(pair)) for pair in cursor.fetchall())
 
-        pairings = []
-        paired_players = set()
+                pairings = []
+                games_scheduled = {player_id: 0 for player_id in player_requests}
 
-        def attempt_pair(player_id, possible_opponents):
-            for opponent_id in possible_opponents:
-                if player_id != opponent_id and opponent_id not in paired_players and (min(player_id, opponent_id), max(player_id, opponent_id)) not in existing_pairs_set:
-                    return opponent_id
-            return None
+                # Implement pairing logic
+                while sum(player_requests.values()) >= 2:
+                    available_players = [p for p in players if player_requests[p] > 0]
+                    random.shuffle(available_players)
 
-        while True:
-            remaining_players = [p for p in player_requests if player_requests[p] > 0]
-            random.shuffle(remaining_players)
-
-            if len(remaining_players) < 2:
-                break
-
-            paired_this_round = False
-            for player in remaining_players:
-                while player_requests[player] > 0:
-                    opponent = attempt_pair(player, remaining_players)
-                    if opponent:
-                        pairings.append((player, opponent))
-                        paired_players.add(player)
-                        paired_players.add(opponent)
-                        player_requests[player] -= 1
-                        player_requests[opponent] -= 1
-                        paired_this_round = True
+                    for i in range(0, len(available_players) - 1, 2):
+                        player1, player2 = available_players[i], available_players[i+1]
+                        if (player1, player2) not in previous_pairings and (player2, player1) not in previous_pairings:
+                            pairings.append((player1, player2))
+                            player_requests[player1] -= 1
+                            player_requests[player2] -= 1
+                            games_scheduled[player1] += 1
+                            games_scheduled[player2] += 1
+                            previous_pairings.add((min(player1, player2), max(player1, player2)))
+                            break
                     else:
+                        # If no pairing was made in this iteration, break to avoid infinite loop
                         break
+                # After generating pairings, fetch player names
+                pairings_with_names = []
+                total_scheduled = 0
+                for player1, player2 in pairings:
+                    cursor.execute("SELECT name FROM players WHERE id IN (%s, %s)", (player1, player2))
+                    names = cursor.fetchall()
+                    pairings_with_names.append((names[0][0], names[1][0], total_scheduled + 1))  # Include pairing ID
+                    total_scheduled += 1
 
-            if not paired_this_round:
-                break
+                # Save pairings to database
+                for player1, player2 in pairings:
+                    save_pairing(player1, player2, round_number)
 
-            paired_players.clear()
+                return render_template('current_pairings.html', 
+                                       pairings=pairings_with_names,
+                                       round_number=round_number,
+                                       total_scheduled=total_scheduled,
+                                       total_requested=total_games_requested)
 
-        for player1, player2 in pairings:
-            save_pairing(player1, player2, round_number)
-
-        return redirect('/current_pairings')
+        except Exception as e:
+            current_app.logger.error(f"Error in generate_pairings: {str(e)}")
+            current_app.logger.error(traceback.format_exc())  # Log the full traceback
+            return "An error occurred while generating pairings. Please check the server logs for more information.", 500
 
 @app.route('/current_pairings')
 def current_pairings():
-    with get_connection() as conn:
-        cursor = conn.cursor()
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
 
-        round_number = get_current_round_number()
-        cursor.execute("SELECT player1_id, player2_id FROM pairings WHERE round_number = %s", (round_number,))
-        pairings = cursor.fetchall()
+            # Get the latest round number
+            cursor.execute("SELECT MAX(round_number) FROM pairings")
+            latest_round = cursor.fetchone()[0]
 
-        cursor.execute("SELECT id, name FROM players")
-        player_names = {row[0]: row[1] for row in cursor.fetchall()}
+            if latest_round is None:
+                return "No pairings have been generated yet.", 404
 
-    pairings_with_names = [(player_names[player1], player_names[player2]) for player1, player2 in pairings if player1 in player_names and player2 in player_names]
+            # Fetch the pairings for the latest round
+            cursor.execute("""
+                SELECT p.id, p1.name AS player1_name, p2.name AS player2_name 
+                FROM pairings p
+                JOIN players p1 ON p.player1_id = p1.id
+                JOIN players p2 ON p.player2_id = p2.id
+                WHERE p.round_number = %s
+            """, (latest_round,))
 
-    return render_template('current_pairings.html', pairings=pairings_with_names, round_number=round_number)
+            pairings = cursor.fetchall()
+
+            # Count total games scheduled
+            total_scheduled = len(pairings)
+
+            # For total_requested, we'll need to sum up the requested games from the last pairing generation
+            # This is an approximation, as we don't store the requested games per round
+            cursor.execute("SELECT SUM(games_won + games_lost + games_tied) FROM players")
+            total_requested = cursor.fetchone()[0] or 0
+
+        return render_template('current_pairings.html', 
+                               pairings=pairings, 
+                               round_number=latest_round,
+                               total_scheduled=total_scheduled,
+                               total_requested=total_requested)
+
+    except Exception as e:
+        current_app.logger.error(f"Error in current_pairings: {str(e)}")
+        current_app.logger.error(traceback.format_exc())
+        return "An error occurred while fetching current pairings. Please check the server logs for more information.", 500
 
 @app.route('/submit_results', methods=['GET', 'POST'])
 def submit_results():
@@ -277,4 +312,6 @@ def submit_results():
 
 if __name__ == "__main__":
     create_database()
-    app.run(debug=True, host='0.0.0.0', port=5000)  # Allow external access
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+    port = int(os.getenv('FLASK_PORT', 5000))
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
