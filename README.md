@@ -31,9 +31,23 @@ This Flask web application manages pairings for a Blood Bowl league, based on re
 5. Initialize the database:
 
 ### Docker Setup
-1. Build the Docker image:
+1. Download contents of git to your local machine.
+2. Build the Docker image:
+docker run -d \
+  --name bbleague \
+  -p 5000:5000 \
+  -e FLASK_APP=app.py \
+  -e FLASK_ENV=development \
+  -v $(pwd):/app \
+  bbleague:latest
 
-2. Run the container:
+### Using Docker Compose
+1. Install Docker and Docker Compose.
+2. Build the Docker images:
+docker-compose build
+
+3. Start the application:
+docker-compose up -d
 
 ## Usage
 1. Start the application:
