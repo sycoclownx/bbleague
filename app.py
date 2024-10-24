@@ -133,9 +133,10 @@ def players():
         players = cursor.fetchall()
     return render_template('players.html', players=players)
 
-import logging
-from flask import current_app
-@app.route('/pairings', methods=['GET', 'POST'])
+from flask import Flask, render_template, request, redirect, url_for, current_app
+import random
+import traceback
+
 @app.route('/pairings', methods=['GET', 'POST'])
 def generate_pairings():
     if request.method == 'GET':
@@ -151,49 +152,77 @@ def generate_pairings():
 
                 round_number = get_current_round_number() + 1
                 player_requests = {}
+                max_games_per_player = 5
 
                 cursor.execute("SELECT id FROM players")
                 players = [player[0] for player in cursor.fetchall()]
 
                 total_games_requested = 0
                 for player_id in players:
-                    games_requested = min(int(request.form.get(f'{player_id}', 0)), 5)  # Allow up to 5 games
+                    games_requested = min(int(request.form.get(f'{player_id}', 0)), max_games_per_player)
                     player_requests[player_id] = games_requested
                     total_games_requested += games_requested
 
-                # Get previous pairings
-                cursor.execute("SELECT player1_id, player2_id FROM pairings")
-                previous_pairings = set(tuple(sorted(pair)) for pair in cursor.fetchall())
+                # Get pairings for the current round
+                cursor.execute("SELECT player1_id, player2_id FROM pairings WHERE round_number = %s", (round_number,))
+                current_round_pairings = set(tuple(sorted(pair)) for pair in cursor.fetchall())
 
+                # Get all previous pairings
+                cursor.execute("SELECT player1_id, player2_id FROM pairings")
+                all_previous_pairings = set(tuple(sorted(pair)) for pair in cursor.fetchall())
                 pairings = []
                 games_scheduled = {player_id: 0 for player_id in player_requests}
 
-                # Implement pairing logic
-                while sum(player_requests.values()) >= 2:
-                    available_players = [p for p in players if player_requests[p] > 0]
-                    if len(available_players) < 2:
-                        break  # Not enough players for another pairing
-                    random.shuffle(available_players)
-                    paired = False
+                def can_pair(player1, player2):
+                    return (
+                        player1 != player2 and
+                        (player1, player2) not in current_round_pairings and
+                        (player2, player1) not in current_round_pairings and
+                        games_scheduled[player1] < player_requests[player1] and
+                        games_scheduled[player2] < player_requests[player2]
+                    )
 
-                    for i in range(len(available_players)):
-                        for j in range(i + 1, len(available_players)):
-                            player1, player2 = available_players[i], available_players[j]
-                            if not has_played_against(player1, player2):
-                                pairings.append((player1, player2))
-                                player_requests[player1] -= 1
-                                player_requests[player2] -= 1
-                                games_scheduled[player1] += 1
-                                games_scheduled[player2] += 1
-                                paired = True
-                                break
-                        if paired:
+                def pair_score(player1, player2):
+                    if (min(player1, player2), max(player1, player2)) in all_previous_pairings:
+                        return 0  # Lower score if they've played before
+                    return 1  # Higher score if they haven't played before
+
+                # First, schedule up to 2 games for each player
+                for _ in range(2):
+                    available_players = [p for p in players if games_scheduled[p] < min(2, player_requests[p])]
+                    random.shuffle(available_players)
+
+                    for i in range(0, len(available_players) - 1, 2):
+                        player1, player2 = available_players[i], available_players[i + 1]
+                        if can_pair(player1, player2):
+                            pairings.append((player1, player2))
+                            games_scheduled[player1] += 1
+                            games_scheduled[player2] += 1
+                            current_round_pairings.add((min(player1, player2), max(player1, player2)))
+
+                # Then, schedule additional games up to 5
+                while sum(min(player_requests[p] - games_scheduled[p], max_games_per_player - games_scheduled[p]) for p in players) >= 2:
+                    available_players = [p for p in players if games_scheduled[p] < min(player_requests[p], max_games_per_player)]
+                    if len(available_players) < 2:
+                        break
+
+                    available_players.sort(key=lambda p: (player_requests[p] - games_scheduled[p]), reverse=True)
+                    paired = False
+                    for player1 in available_players:
+                        possible_pairs = [(player1, player2) for player2 in available_players if can_pair(player1, player2)]
+                        if possible_pairs:
+                            best_pair = max(possible_pairs, key=lambda pair: (pair_score(*pair), player_requests[pair[1]] - games_scheduled[pair[1]]))
+                            player1, player2 = best_pair
+                            pairings.append((player1, player2))
+                            games_scheduled[player1] += 1
+                            games_scheduled[player2] += 1
+                            current_round_pairings.add((min(player1, player2), max(player1, player2)))
+                            paired = True
                             break
 
                     if not paired:
-                        # If we couldn't find a pairing, reduce the request of a random player
-                        player_to_reduce = random.choice(available_players)
-                        player_requests[player_to_reduce] -= 1
+                        break
+
                 # After generating pairings, fetch player names
                 pairings_with_names = []
                 total_scheduled = 0
