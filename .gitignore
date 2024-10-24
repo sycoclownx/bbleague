@@ -1,2 +1,4 @@
-# Add this line to your .gitignore file
+# Add or ensure these lines are in your .gitignore file
 .env
+*.env
+

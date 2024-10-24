@@ -136,6 +136,7 @@ def players():
 import logging
 from flask import current_app
 @app.route('/pairings', methods=['GET', 'POST'])
+@app.route('/pairings', methods=['GET', 'POST'])
 def generate_pairings():
     if request.method == 'GET':
         with get_connection() as conn:
@@ -170,21 +171,29 @@ def generate_pairings():
                 # Implement pairing logic
                 while sum(player_requests.values()) >= 2:
                     available_players = [p for p in players if player_requests[p] > 0]
+                    if len(available_players) < 2:
+                        break  # Not enough players for another pairing
                     random.shuffle(available_players)
+                    paired = False
 
-                    for i in range(0, len(available_players) - 1, 2):
-                        player1, player2 = available_players[i], available_players[i+1]
-                        if (player1, player2) not in previous_pairings and (player2, player1) not in previous_pairings:
-                            pairings.append((player1, player2))
-                            player_requests[player1] -= 1
-                            player_requests[player2] -= 1
-                            games_scheduled[player1] += 1
-                            games_scheduled[player2] += 1
-                            previous_pairings.add((min(player1, player2), max(player1, player2)))
+                    for i in range(len(available_players)):
+                        for j in range(i + 1, len(available_players)):
+                            player1, player2 = available_players[i], available_players[j]
+                            if not has_played_against(player1, player2):
+                                pairings.append((player1, player2))
+                                player_requests[player1] -= 1
+                                player_requests[player2] -= 1
+                                games_scheduled[player1] += 1
+                                games_scheduled[player2] += 1
+                                paired = True
+                                break
+                        if paired:
                             break
-                    else:
-                        # If no pairing was made in this iteration, break to avoid infinite loop
-                        break
+
+                    if not paired:
+                        # If we couldn't find a pairing, reduce the request of a random player
+                        player_to_reduce = random.choice(available_players)
+                        player_requests[player_to_reduce] -= 1
                 # After generating pairings, fetch player names
                 pairings_with_names = []
                 total_scheduled = 0
@@ -193,9 +202,6 @@ def generate_pairings():
                     names = cursor.fetchall()
                     pairings_with_names.append((names[0][0], names[1][0], total_scheduled + 1))  # Include pairing ID
                     total_scheduled += 1
-
-                # Save pairings to database
-                for player1, player2 in pairings:
                     save_pairing(player1, player2, round_number)
 
                 return render_template('current_pairings.html', 
