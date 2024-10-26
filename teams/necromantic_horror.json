@@ -1,0 +1,93 @@
+[
+  [
+    "QTY",
+    "Position",
+    "Cost",
+    "MA",
+    "ST",
+    "AG",
+    "PA",
+    "AV",
+    "Skills & Traits",
+    "Pri",
+    "Sec"
+  ],
+  [
+    "0-16",
+    "Zombie",
+    "40k",
+    "4",
+    "3",
+    "4",
+    "\u2013",
+    "9",
+    "Regeneration",
+    "G",
+    "AS"
+  ],
+  [
+    "0-2",
+    "Ghoul Runners",
+    "75k",
+    "7",
+    "3",
+    "3",
+    "4",
+    "8",
+    "Dodge",
+    "AG",
+    "PS"
+  ],
+  [
+    "0-2",
+    "Wraith",
+    "95k",
+    "6",
+    "3",
+    "3",
+    "\u2013",
+    "9",
+    "Block, Foul Appearance, No Hands, Regeneration, Side Step",
+    "GS",
+    "A"
+  ],
+  [
+    "0-2",
+    "Werewolf",
+    "125k",
+    "8",
+    "3",
+    "3",
+    "4",
+    "9",
+    "Claws, Frenzy, Regeneration",
+    "AG",
+    "PS"
+  ],
+  [
+    "0-2",
+    "Flesh Golem",
+    "115k",
+    "4",
+    "4",
+    "4",
+    "\u2013",
+    "10",
+    "Regeneration, Stand Firm, Thick Skull",
+    "GS",
+    "A"
+  ],
+  [
+    "0-8",
+    "ReRolls",
+    "70k",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Apothecary: No",
+    "",
+    ""
+  ]
+]

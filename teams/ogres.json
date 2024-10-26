@@ -1,0 +1,67 @@
+[
+  [
+    "QTY",
+    "Position",
+    "Cost",
+    "MA",
+    "ST",
+    "AG",
+    "PA",
+    "AV",
+    "Skills & Traits",
+    "Pri",
+    "Sec"
+  ],
+  [
+    "0-16",
+    "Gnoblar",
+    "15k",
+    "5",
+    "1",
+    "3",
+    "5",
+    "6",
+    "Dodge, Right Stuff, Side Step Stunty, Titchy",
+    "A",
+    "G"
+  ],
+  [
+    "0-1",
+    "Runt Punter",
+    "145k",
+    "5",
+    "5",
+    "4",
+    "4",
+    "10",
+    "Bone Head, Kick Team Mate, Mighty Blow (+1) Thick Skull",
+    "PS",
+    "AG"
+  ],
+  [
+    "0-5",
+    "Ogre",
+    "140k",
+    "5",
+    "5",
+    "4",
+    "5",
+    "10",
+    "Bone Head, Mighty Blow (+1), Thick Skull, Throw Team Mate",
+    "S",
+    "AGP"
+  ],
+  [
+    "0-8",
+    "ReRolls",
+    "70k",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Apothecary: Yes",
+    "",
+    ""
+  ]
+]

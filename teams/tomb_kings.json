@@ -1,0 +1,80 @@
+[
+  [
+    "QTY",
+    "Position",
+    "Cost",
+    "MA",
+    "ST",
+    "AG",
+    "PA",
+    "AV",
+    "Skills & Traits",
+    "Pri",
+    "Sec"
+  ],
+  [
+    "0-16",
+    "Skeleton",
+    "40k",
+    "5",
+    "3",
+    "4",
+    "6",
+    "8",
+    "Regeneration, Thick Skull",
+    "G",
+    "AS"
+  ],
+  [
+    "0-2",
+    "Anointed Thrower",
+    "70k",
+    "6",
+    "3",
+    "4",
+    "3",
+    "8",
+    "Pass, Regeneration, Sure Hands, Thick Skull",
+    "GP",
+    "A"
+  ],
+  [
+    "0-2",
+    "Anointed Blitzer",
+    "90k",
+    "6",
+    "3",
+    "4",
+    "6",
+    "9",
+    "Block, Regeneration, Thick Skull",
+    "GS",
+    "AP"
+  ],
+  [
+    "0-4",
+    "Tomb Guardian",
+    "100k",
+    "4",
+    "5",
+    "5",
+    "\u2013",
+    "10",
+    "Decay, Regeneration",
+    "S",
+    "AG"
+  ],
+  [
+    "0-8",
+    "ReRolls",
+    "70k",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Apothecary: No",
+    "",
+    ""
+  ]
+]

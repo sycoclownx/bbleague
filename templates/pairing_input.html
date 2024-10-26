@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Pairings</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Game League Home</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Include Google Fonts -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>    
 <body>
-    <h1>Choose Number of Games</h1>
+    <header class="header">
+        <h1>Blood Bowl League Management</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/add_player">Add Player</a></li>
+                <li><a href="/players">View Players</a></li>
+                <li><a href="/pairings">Generate Pairings</a></li>
+                <li><a href="/current_pairings">Current Pairings</a></li>
+                <li><a href="/submit_results">Submit Results</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Choose Number of Games</h2>
     <form method="POST" action="{{ url_for('generate_pairings') }}">
         <table>
             <tr>
@@ -32,6 +48,6 @@
         </table>
         <button type="submit">Generate Pairings</button>
     </form>
-    <a href="{{ url_for('home') }}">Back to Home</a>
+    </main>
 </body>
 </html>

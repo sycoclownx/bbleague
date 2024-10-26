@@ -3,23 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Submit Results</title>
-</head>
+    <title>Game League Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Include Google Fonts -->
+    <link rel="stylesheet" href="static/styles.css"> <!-- Your CSS file -->
+</head>    
 <body>
+<header class="header">
+    <h1>Blood Bowl League Management</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/add_player">Add Player</a></li>
+            <li><a href="/players">View Players</a></li>
+            <li><a href="/pairings">Generate Pairings</a></li>
+            <li><a href="/current_pairings">Current Pairings</a></li>
+            <li><a href="/submit_results">Submit Results</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
     <h1>Submit Game Results</h1>
     <form method="POST">
         {% for pairing in pairings %}
             <div class="match">
-                <p>{{ pairing[0] }} vs {{ pairing[1] }}</p>  <!-- Access player names by index -->
-                <input type="radio" name="result_{{ pairing[2] }}" value="player1"> {{ pairing[0] }} Wins<br>
-                <input type="radio" name="result_{{ pairing[2] }}" value="player2"> {{ pairing[1] }} Wins<br>
-                <input type="radio" name="result_{{ pairing[2] }}" value="tie"> Tie<br>
+                <p class="match-title">{{ pairing[0] }} vs {{ pairing[1] }}</p>
+                <div class="result-options">
+                    <label>
+                        <input type="radio" name="result_{{ pairing[2] }}" value="player1"> 
+                        {{ pairing[0] }} Wins
+                    </label>
+                    <label>
+                        <input type="radio" name="result_{{ pairing[2] }}" value="player2"> 
+                        {{ pairing[1] }} Wins
+                    </label>
+                    <label>
+                        <input type="radio" name="result_{{ pairing[2] }}" value="tie"> 
+                        Tie
+                    </label>
+                </div>
             </div>
             <hr>
         {% endfor %}
         <button type="submit">Submit Results</button>
     </form>
-    <a href="{{ url_for('home') }}">Back to Home</a>
+</main>
 </body>
 </html>

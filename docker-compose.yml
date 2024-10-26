@@ -9,7 +9,7 @@ services:
     ports:
       - 5000:5000
     command: |
-      sh -c "pip install --no-cache-dir Flask psycopg2-binary python-dotenv &&
+      sh -c "pip install --no-cache-dir Flask psycopg2-binary python-dotenv beautifulsoup4 requests &&
               python app.py"
     environment:
       - FLASK_ENV=development

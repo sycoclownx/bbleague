@@ -4,19 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Player</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Include Google Fonts -->
+    <link rel="stylesheet" href="static/styles.css"> <!-- Your CSS file -->
 </head>
 <body>
-    <h1>Add Player</h1>
-    <form action="{{ url_for('add_player') }}" method="POST">
-        <label for="name">Player Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="team">Team:</label>
-        <input type="text" id="team" name="team" required>
-        
-        <button type="submit">Add Player</button>
-    </form>
-    <a href="{{ url_for('home') }}">Back to Home</a>
+    <header class="header">
+        <h1>Blood Bowl League Management</h1>
+        <nav>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/add_player">Add Player</a></li>
+                <li><a href="/players">View Players</a></li>
+                <li><a href="/pairings">Generate Pairings</a></li>
+                <li><a href="/current_pairings">Current Pairings</a></li>
+                <li><a href="/submit_results">Submit Results</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Add a New Player</h2>
+        <form action="/add_player" method="POST">
+            <label for="name">Player Name:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="team">Team:</label>
+            <input type="text" id="team" name="team" required>
+            
+            <button type="submit">Add Player</button>
+        </form>
+    </main>
+
+    <footer>
+    </footer>
 </body>
 </html>

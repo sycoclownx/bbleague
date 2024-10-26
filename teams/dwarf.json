@@ -1,0 +1,93 @@
+[
+  [
+    "QTY",
+    "Position",
+    "Cost",
+    "MA",
+    "ST",
+    "AG",
+    "PA",
+    "AV",
+    "Skills & Traits",
+    "Pri",
+    "Sec"
+  ],
+  [
+    "0-12",
+    "Linemen",
+    "70k",
+    "4",
+    "3",
+    "4",
+    "5",
+    "10",
+    "Block, Tackle, Thick Skull",
+    "GS",
+    "A"
+  ],
+  [
+    "0-2",
+    "Runner",
+    "85k",
+    "6",
+    "3",
+    "3",
+    "4",
+    "9",
+    "Sure Hands, Thick Skull",
+    "GP",
+    "AS"
+  ],
+  [
+    "0-2",
+    "Blitzer",
+    "80k",
+    "5",
+    "3",
+    "3",
+    "4",
+    "10",
+    "Block, Thick Skull",
+    "GS",
+    "AP"
+  ],
+  [
+    "0-2",
+    "Troll Slayer",
+    "95k",
+    "5",
+    "3",
+    "4",
+    "\u2013",
+    "9",
+    "Block, Dauntless, Frenzy, Thick Skull",
+    "GS",
+    "A"
+  ],
+  [
+    "0-1",
+    "Deathroller",
+    "170k",
+    "4",
+    "7",
+    "5",
+    "\u2013",
+    "11",
+    "Break Tackle, Dirty Player (+2), Juggernaut, Loner (5+), Mighty Blow (+1), No Hands, Secret Weapon, Stand Firm",
+    "S",
+    "AG"
+  ],
+  [
+    "0-8",
+    "ReRolls",
+    "50k",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Apothecary: Yes",
+    "",
+    ""
+  ]
+]

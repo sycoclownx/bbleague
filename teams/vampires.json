@@ -1,0 +1,93 @@
+[
+  [
+    "QTY",
+    "Position",
+    "Cost",
+    "MA",
+    "ST",
+    "AG",
+    "PA",
+    "AV",
+    "Skills & Traits",
+    "Pri",
+    "Sec"
+  ],
+  [
+    "0-12",
+    "Thrall",
+    "40k",
+    "6",
+    "3",
+    "3",
+    "4",
+    "8",
+    "\u2013",
+    "G",
+    "AS"
+  ],
+  [
+    "0-2",
+    "Vampire Runner",
+    "100k",
+    "8",
+    "3",
+    "2",
+    "4",
+    "8",
+    "Bloodlust (2+), Hypnotic Gaze, Regeneration",
+    "AG",
+    "PS"
+  ],
+  [
+    "0-2",
+    "Vampire Thrower",
+    "110k",
+    "6",
+    "4",
+    "2",
+    "2",
+    "9",
+    "Bloodlust (2+), Hypnotic Gaze, Pass, Regeneration",
+    "AGP",
+    "S"
+  ],
+  [
+    "0-2",
+    "Vampire Blitzer",
+    "110k",
+    "6",
+    "4",
+    "2",
+    "5",
+    "9",
+    "Bloodlust (3+), Hypnotic Gaze, Juggernaut, Regeneration",
+    "AGS",
+    "\u2013"
+  ],
+  [
+    "0-1",
+    "Vargheist",
+    "150k",
+    "5",
+    "5",
+    "4",
+    "\u2013",
+    "10",
+    "Bloodlust (3+), Claws, Frenzy, Loner (4+), Regeneration",
+    "S",
+    "AG"
+  ],
+  [
+    "0-8",
+    "ReRolls",
+    "60k",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Apothecary: Yes",
+    "",
+    ""
+  ]
+]

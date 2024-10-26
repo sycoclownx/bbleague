@@ -1,0 +1,80 @@
+[
+  [
+    "QTY",
+    "Position",
+    "Cost",
+    "MA",
+    "ST",
+    "AG",
+    "PA",
+    "AV",
+    "Skills & Traits",
+    "Pri",
+    "Sec"
+  ],
+  [
+    "0-16",
+    "Skink",
+    "60k",
+    "8",
+    "2",
+    "3",
+    "4",
+    "8",
+    "Dodge, Stunty",
+    "A",
+    "GPS"
+  ],
+  [
+    "0-2",
+    "Chameleon Skink",
+    "70k",
+    "7",
+    "2",
+    "3",
+    "3",
+    "8",
+    "Dodge, On the Ball, Shadowing, Stunty",
+    "A",
+    "GPS"
+  ],
+  [
+    "0-6",
+    "Saurus",
+    "85k",
+    "6",
+    "4",
+    "5",
+    "6",
+    "10",
+    "\u2013",
+    "GS",
+    "A"
+  ],
+  [
+    "0-1",
+    "Kroxigor",
+    "140k",
+    "6",
+    "5",
+    "5",
+    "\u2013",
+    "10",
+    "Bone Head, Loner (4+), Mighty Blow (+1), Prehensile Tail, Thick Skull",
+    "S",
+    "AG"
+  ],
+  [
+    "0-8",
+    "ReRolls",
+    "70k",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Apothecary: Yes",
+    "",
+    ""
+  ]
+]
