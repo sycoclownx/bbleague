@@ -1,0 +1,8 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Snotling,15000,5,1,3,5,6,"Dodge, Right Stuff, Side Step Stunty, Swarming, Titchy",A,G
+0-2,Fungus Flinga,30000,5,1,3,4,6,"Bombardier, Dodge, Right Stuff, Secret Weapon, Side Step, Stunty",AP,G
+0-2,Fun-hoppa,20000,6,1,3,5,6,"Dodge, Pogo Stick, Right Stuff, Side Step, Stunty",A,G
+0-2,Stilty Runna,20000,6,1,3,5,6,"Dodge, Right Stuff, Side Step, Sprint, Stunty",A,G
+0-2,Pump Wagon,105000,4,5,5,–,9,"Dirty Player (+1), Juggernaut, Mighty Blow (+1), Really Stupid, Secret Weapon, Stand Firm",S,AG
+0-2,Trained Troll,115000,4,5,5,5,10,"Always Hungry, Loner (3+), Mighty Blow (+1), Projectile Vomit, Really Stupid, Regeneration, Throw Team Mate",S,AGP
+0-8,ReRolls,60000,,,,,,Apothecary: Yes,,

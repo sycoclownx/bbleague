@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-12,Lineman,70000,6,3,2,4,9,–,AG,S
+0-2,Runner,80000,7,3,2,3,8,Dump-Off,AGP,S
+0-4,Blitzer,100000,7,3,2,4,9,Block,AG,PS
+0-2,Assassin,85000,7,3,2,5,8,"Shadowing, Stab",AG,PS
+0-2,Witch Elf,110000,7,3,2,5,8,"Dodge, Frenzy, Jump Up",AG,PS
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

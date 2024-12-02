@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Beastman,60000,6,3,3,4,9,Horns,GMS,AP
+0-4,Chosen Blockers,100000,5,4,3,5,10,–,GMS,A
+0-1,Chaos Troll,115000,4,5,5,5,10,"Always Hungry, Loner (4+), Mighty Blow (+1), Projectile Vomit, Really Stupid, Regeneration, Throw Team Mate",MS,AG
+0-1,Chaos Ogre,140000,5,5,4,5,10,"Bone Head, Loner (4+), Mighty Blow (+1), Thick Skull, Throw Team Mate",MS,AG
+0-1,Minotaur,150000,5,5,4,–,9,"Loner (4+), Frenzy, Horns, Mighty Blow (+1), Thick Skull, Unchannelled Fury",MS,AG
+0-8,ReRolls,60000,,,,,,Apothecary: Yes,,

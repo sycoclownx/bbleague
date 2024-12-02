@@ -1,0 +1,6 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Skink,60000,8,2,3,4,8,"Dodge, Stunty",A,GPS
+0-2,Chameleon Skink,70000,7,2,3,3,8,"Dodge, On the Ball, Shadowing, Stunty",A,GPS
+0-6,Saurus,85000,6,4,5,6,10,–,GS,A
+0-1,Kroxigor,140000,6,5,5,–,10,"Bone Head, Loner (4+), Mighty Blow (+1), Prehensile Tail, Thick Skull",S,AG
+0-8,ReRolls,70000,,,,,,Apothecary: Yes,,

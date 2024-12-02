@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Roster Builder</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <h1>Roster Builder</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/roster" method="POST">
+        <label for="team">Select a team:</label>
+        <select id="team" name="team">
+            {% for team in teams %}
+                <option value="{{ team }}">{{ team }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="roster_cost">Enter roster cost:</label>
+        <input type="number" id="roster_cost" name="roster_cost" value="1000000">
+
+        <button type="submit">Build Roster</button>
+    </form>
+
+    {% if team_name %}
+        <h2>Team: {{ team_name }}</h2>
+        <h3>Roster Cost: {{ roster_cost }}</h3>
+
+        <table id="roster-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Cost</th>
+                    <th>MA</th>
+                    <th>ST</th>
+                    <th>AG</th>
+                    <th>PA</th>
+                    <th>AV</th>
+                    <th>Skills and Traits</th>
+                    <th>Pri</th>
+                    <th>Sec</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                    <tr>
+                        <td><input type="text" name="player_name" value="{{ player[1] }}"></td>
+                        <td><input type="text" name="player_position" value="{{ player[2] }}"></td>
+                        <td>{{ player[3] }}</td>
+                        <td>{{ player[4] }}</td>
+                        <td>{{ player[5] }}</td>
+                        <td>{{ player[6] }}</td>
+                        <td>{{ player[7] }}</td>
+                        <td>{{ player[8] }}</td>
+                        <td><input type="text" name="player_skills_traits" value="{{ player[9] }}"></td>
+                        <td><input type="text" name="player_pri" value="{{ player[10] }}"></td>
+                        <td><input type="text" name="player_sec" value="{{ player[11] }}"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+
+                var roster = [];
+                $('#roster-table tbody tr').each(function() {
+                    var player = {};
+                    $(this).find('input').each(function() {
+                        player[$(this).attr('name')] = $(this).val();
+                    });
+                    roster.push(player);
+                });
+
+                // Send the roster data to the server
+                $.ajax({
+                    url: '/roster',
+                    method: 'POST',
+                    data: {
+                        roster: roster,
+                        team: $('#team').val(),
+                        roster_cost: $('#roster_cost').val()
+                    },
+                    success: function(response) {
+                        // Handle the server response
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr, status, error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

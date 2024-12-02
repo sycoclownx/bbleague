@@ -1,0 +1,8 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Lineman,50000,6,3,3,4,9,–,G,AS
+0-2,Thrower,80000,6,3,3,2,9,"Pass, Sure Hands",GP,AS
+0-4,Catcher,65000,8,2,3,5,8,"Catch, Dodge",AG,PS
+0-4,Blitzer,85000,7,3,3,4,9,Block,GS,AP
+0-3,Halfling,30000,5,2,3,4,7,"Dodge, Right Stuff, Stunty",A,GS
+0-1,Ogre,140000,5,5,4,5,10,"Bone Head, Loner (4+), Mighty Blow (+1), Thick Skull, Throw Team Mate",S,AG
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

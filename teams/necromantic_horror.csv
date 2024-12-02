@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Zombie,40000,4,3,4,–,9,Regeneration,G,AS
+0-2,Ghoul Runners,75000,7,3,3,4,8,Dodge,AG,PS
+0-2,Wraith,95000,6,3,3,–,9,"Block, Foul Appearance, No Hands, Regeneration, Side Step",GS,A
+0-2,Werewolf,125000,8,3,3,4,9,"Claws, Frenzy, Regeneration",AG,PS
+0-2,Flesh Golem,115000,4,4,4,–,10,"Regeneration, Stand Firm, Thick Skull",GS,A
+0-8,ReRolls,70000,,,,,,Apothecary: No,,

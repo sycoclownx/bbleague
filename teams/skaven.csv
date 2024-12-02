@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Lineman,50000,7,3,3,4,8,–,G,AMS
+0-2,Thrower,85000,7,3,3,2,8,"Pass, Sure Hands",GP,AMS
+0-4,Gutter Runner,85000,9,2,2,4,8,Dodge,AG,MPS
+0-2,Blitzer,90000,7,3,3,5,9,Block,GS,AMP
+0-1,Rat Ogre,150000,6,5,4,–,9,"Animal Savagery, Frenzy, Loner (4+), Mighty Blow (+1), Prehensile Tail",S,AGM
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

@@ -1,0 +1,6 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Lineman,60000,6,3,3,4,9,"Pogo Stick, Very Long Legs",G,AS
+0-4,Catcher,80000,7,2,2,4,8,"Pogo Stick, Very Long Legs, Diving Catch",AG,SP
+0-4,Blitzer,110000,7,3,3,4,9,"Pogo Stick, Very Long Legs, Diving Tackle, Jump Up",AGS,P
+0-1,Kroxigor,140000,6,5,5,–,10,"Bone Head, Loner (4+), Mighty Blow (+1), Prehensile Tail, Thick Skull",S,AG
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

@@ -1,0 +1,6 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Bloodborn Marauder Linemen,50000,6,3,3,4,8,Frenzy,GM,AS
+0-4,Khorngors,70000,6,3,3,4,9,"Horns, Juggernaut",GMS,AP
+0-4,Bloodseekers,110000,5,4,4,6,10,Frenzy,GMS,A
+0-1,Bloodspawn,160000,5,5,4,–,9,"Claws, Frenzy, Loner (4+), Mighty Blow (+1), Unchannelled Fury",MS,AG
+0-8,Rerolls,60000,,,,,,Apothecary: Yes,,

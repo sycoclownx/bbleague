@@ -1,0 +1,6 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Eagle Warrior Linewomen,50000,6,3,3,4,8,Dodge,G,AS
+0-2,Python Warrior Throwers,80000,6,3,3,3,8,"Dodge, On The Ball, Pass, Safe Pass",GP,AS
+0-2,Piranha Warrior Blitzers,90000,7,3,3,5,8,"Dodge, Hit and Run, Jump Up",AG,S
+0-2,Jaguar Warrior Blockers,110000,6,4,3,5,9,"Defensive, Dodge",GS,A
+0-8,ReRolls,60000,,,,,,Apothecary: Yes,,

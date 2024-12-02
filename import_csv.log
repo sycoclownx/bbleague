@@ -1,0 +1,92 @@
+2024-11-04 18:38:32,376 - INFO - Created table for skaven
+2024-11-04 18:38:32,376 - INFO - Inserted data into table for skaven
+2024-11-04 18:38:32,378 - INFO - Committed changes for skaven
+2024-11-04 18:38:32,382 - INFO - Created table for goblins
+2024-11-04 18:38:32,383 - INFO - Inserted data into table for goblins
+2024-11-04 18:38:32,384 - INFO - Committed changes for goblins
+2024-11-04 18:38:32,386 - INFO - Created table for underworld_denizens
+2024-11-04 18:38:32,387 - INFO - Inserted data into table for underworld_denizens
+2024-11-04 18:38:32,388 - INFO - Committed changes for underworld_denizens
+2024-11-04 18:38:32,390 - INFO - Created table for lizardmen
+2024-11-04 18:38:32,391 - INFO - Inserted data into table for lizardmen
+2024-11-04 18:38:32,391 - INFO - Committed changes for lizardmen
+2024-11-04 18:38:32,394 - INFO - Created table for chaos_renegades
+2024-11-04 18:38:32,394 - INFO - Inserted data into table for chaos_renegades
+2024-11-04 18:38:32,395 - INFO - Committed changes for chaos_renegades
+2024-11-04 18:38:32,398 - INFO - Created table for slann
+2024-11-04 18:38:32,398 - INFO - Inserted data into table for slann
+2024-11-04 18:38:32,399 - INFO - Committed changes for slann
+2024-11-04 18:38:32,401 - INFO - Created table for high_elf
+2024-11-04 18:38:32,402 - INFO - Inserted data into table for high_elf
+2024-11-04 18:38:32,403 - INFO - Committed changes for high_elf
+2024-11-04 18:38:32,405 - INFO - Created table for shambling_undead
+2024-11-04 18:38:32,406 - INFO - Inserted data into table for shambling_undead
+2024-11-04 18:38:32,406 - INFO - Committed changes for shambling_undead
+2024-11-04 18:38:32,409 - INFO - Created table for gnomes
+2024-11-04 18:38:32,409 - INFO - Inserted data into table for gnomes
+2024-11-04 18:38:32,410 - INFO - Committed changes for gnomes
+2024-11-04 18:38:32,412 - INFO - Created table for norse
+2024-11-04 18:38:32,413 - INFO - Inserted data into table for norse
+2024-11-04 18:38:32,414 - INFO - Committed changes for norse
+2024-11-04 18:38:32,416 - INFO - Created table for chaos_chosen
+2024-11-04 18:38:32,416 - INFO - Inserted data into table for chaos_chosen
+2024-11-04 18:38:32,417 - INFO - Committed changes for chaos_chosen
+2024-11-04 18:38:32,420 - INFO - Created table for tomb_kings
+2024-11-04 18:38:32,420 - INFO - Inserted data into table for tomb_kings
+2024-11-04 18:38:32,421 - INFO - Committed changes for tomb_kings
+2024-11-04 18:38:32,424 - INFO - Created table for ogres
+2024-11-04 18:38:32,424 - INFO - Inserted data into table for ogres
+2024-11-04 18:38:32,425 - INFO - Committed changes for ogres
+2024-11-04 18:38:32,428 - INFO - Created table for amazons
+2024-11-04 18:38:32,428 - INFO - Inserted data into table for amazons
+2024-11-04 18:38:32,429 - INFO - Committed changes for amazons
+2024-11-04 18:38:32,432 - INFO - Created table for nurgle
+2024-11-04 18:38:32,433 - INFO - Inserted data into table for nurgle
+2024-11-04 18:38:32,433 - INFO - Committed changes for nurgle
+2024-11-04 18:38:32,435 - INFO - Created table for dark_elf
+2024-11-04 18:38:32,436 - INFO - Inserted data into table for dark_elf
+2024-11-04 18:38:32,437 - INFO - Committed changes for dark_elf
+2024-11-04 18:38:32,439 - INFO - Created table for snotlings
+2024-11-04 18:38:32,439 - INFO - Inserted data into table for snotlings
+2024-11-04 18:38:32,440 - INFO - Committed changes for snotlings
+2024-11-04 18:38:32,443 - INFO - Created table for vampires
+2024-11-04 18:38:32,443 - INFO - Inserted data into table for vampires
+2024-11-04 18:38:32,444 - INFO - Committed changes for vampires
+2024-11-04 18:38:32,447 - INFO - Created table for khorne
+2024-11-04 18:38:32,447 - INFO - Inserted data into table for khorne
+2024-11-04 18:38:32,448 - INFO - Committed changes for khorne
+2024-11-04 18:38:32,450 - INFO - Created table for orcs
+2024-11-04 18:38:32,451 - INFO - Inserted data into table for orcs
+2024-11-04 18:38:32,451 - INFO - Committed changes for orcs
+2024-11-04 18:38:32,454 - INFO - Created table for imperial_nobility
+2024-11-04 18:38:32,454 - INFO - Inserted data into table for imperial_nobility
+2024-11-04 18:38:32,455 - INFO - Committed changes for imperial_nobility
+2024-11-04 18:38:32,457 - INFO - Created table for chaos_dwarf
+2024-11-04 18:38:32,457 - INFO - Inserted data into table for chaos_dwarf
+2024-11-04 18:38:32,458 - INFO - Committed changes for chaos_dwarf
+2024-11-04 18:38:32,460 - INFO - Created table for necromantic_horror
+2024-11-04 18:38:32,461 - INFO - Inserted data into table for necromantic_horror
+2024-11-04 18:38:32,462 - INFO - Committed changes for necromantic_horror
+2024-11-04 18:38:32,464 - INFO - Created table for black_orc
+2024-11-04 18:38:32,464 - INFO - Inserted data into table for black_orc
+2024-11-04 18:38:32,465 - INFO - Committed changes for black_orc
+2024-11-04 18:38:32,468 - INFO - Created table for elven_union
+2024-11-04 18:38:32,468 - INFO - Inserted data into table for elven_union
+2024-11-04 18:38:32,469 - INFO - Committed changes for elven_union
+2024-11-04 18:38:32,471 - INFO - Created table for wood_elf
+2024-11-04 18:38:32,472 - INFO - Inserted data into table for wood_elf
+2024-11-04 18:38:32,473 - INFO - Committed changes for wood_elf
+2024-11-04 18:38:32,475 - INFO - Created table for dwarf
+2024-11-04 18:38:32,476 - INFO - Inserted data into table for dwarf
+2024-11-04 18:38:32,477 - INFO - Committed changes for dwarf
+2024-11-04 18:38:32,479 - INFO - Created table for owa
+2024-11-04 18:38:32,480 - INFO - Inserted data into table for owa
+2024-11-04 18:38:32,481 - INFO - Committed changes for owa
+2024-11-04 18:38:32,483 - INFO - Created table for humans
+2024-11-04 18:38:32,483 - INFO - Inserted data into table for humans
+2024-11-04 18:38:32,484 - INFO - Committed changes for humans
+2024-11-04 18:38:32,486 - INFO - Created table for halflings
+2024-11-04 18:38:32,487 - INFO - Inserted data into table for halflings
+2024-11-04 18:38:32,488 - INFO - Committed changes for halflings
+2024-11-04 18:38:32,488 - INFO - Database connection closed
+2024-11-04 18:38:32,488 - INFO - Import process completed

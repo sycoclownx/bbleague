@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-12,Retainer Lineman,45000,6,3,4,4,8,Fend,G,AS
+0-2,Thrower,75000,6,3,3,3,9,"Pass, Running Pass",GP,AS
+0-2,Noble Blitzer,105000,7,3,3,4,9,"Block, Catch",AG,PS
+0-4,Bodyguards,90000,6,3,3,5,9,"Stand Firm, Wrestle",GS,A
+0-1,Ogre,140000,5,5,4,5,10,"Bone Head, Loner (4+), Mighty Blow (+1), Thick Skull, Throw Team Mate",S,AG
+0-8,ReRolls,70000,,,,,,Apothecary: Yes,,

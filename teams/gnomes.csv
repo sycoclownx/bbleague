@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Gnome Lineman,40000,5,2,3,4,7,"Jump Up, Right Stuff, Stunty, Wrestle",A,GS
+0-2,Gnome Beastmaster,55000,5,2,3,4,8,"Guard, Jump Up, Stunty, Wrestle",A,GS
+0-2,Gnome Illusionist,50000,5,2,3,3,7,"Jump Up, Stunty, Trickster, Wrestle",AP,G
+0-2,Woodland Fox,50000,7,2,2,–,6,"Dodge, My Ball, Sidestep, Stunty",–,A
+0-2,Altern Forest Treeman,120000,2,6,5,5,11,"Mighty Blow (+1), Stand Firm, Strong Arm, Take Root, Thick Skull, Throw Team-mate, Timmm-ber!",S,AGP
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

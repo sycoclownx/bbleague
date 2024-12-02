@@ -1,0 +1,6 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Lineman,70000,6,3,2,4,9,–,AG,PS
+0-2,Thrower,100000,6,3,2,2,9,"Cloud Burster, Pass, Safe Pass",AGP,S
+0-4,Catcher,90000,8,3,2,5,8,Catch,AG,S
+0-2,Blitzer,100000,7,3,2,4,9,Block,AG,PS
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

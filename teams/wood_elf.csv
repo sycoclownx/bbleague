@@ -1,0 +1,7 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-12,Lineman,70000,7,3,2,4,8,–,AG,S
+0-2,Thrower,95000,7,3,2,2,8,Pass,AGP,S
+0-4,Catcher,90000,8,2,2,4,8,"Catch, Dodge",AG,PS
+0-2,Wardancer,125000,8,3,2,4,8,"Block, Dodge, Leap",AG,PS
+0-1,Loren Forest Treeman,120000,2,6,5,5,11,"Loner (4+), Mighty Blow (+1), Stand Firm, Strong Arm, Take Root, Thick Skull, Throw Team Mate",S,AG
+0-8,ReRolls,50000,,,,,,Apothecary: Yes,,

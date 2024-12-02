@@ -6,6 +6,8 @@ import time
 from flask import Flask, render_template, request, redirect, url_for, current_app
 import psycopg2
 from dotenv import load_dotenv
+import json
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -14,6 +16,14 @@ load_dotenv()
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
+
+# Load team data from JSON files
+teams = {
+    "team1": "Team 1",
+    "team2": "Team 2",
+    "team3": "Team 3",
+    # Add more teams as needed
+}
 
 def get_connection():
     return psycopg2.connect(
@@ -103,7 +113,7 @@ def update_player_stats(player_id, result):
             conn.commit()
 
 
-@app.route('/')
+@app.route('/home')
 def home():
     return render_template('home.html')
 
@@ -132,10 +142,6 @@ def players():
         cursor.execute("SELECT * FROM players")
         players = cursor.fetchall()
     return render_template('players.html', players=players)
-
-from flask import Flask, render_template, request, redirect, url_for, current_app
-import random
-import traceback
 
 @app.route('/pairings', methods=['GET', 'POST'])
 def generate_pairings():
@@ -245,6 +251,8 @@ def generate_pairings():
             return "An error occurred while generating pairings. Please check the server logs for more information.", 500
 
 @app.route('/current_pairings')
+from flask import Flask, render_template, request, redirect, url_for, current_app
+import traceback
 def current_pairings():
     try:
         with get_connection() as conn:
@@ -257,13 +265,13 @@ def current_pairings():
             if latest_round is None:
                 return "No pairings have been generated yet.", 404
 
-            # Fetch the pairings for the latest round
+            # Fetch the pairings for the latest round without reported results
             cursor.execute("""
                 SELECT p.id, p1.name AS player1_name, p2.name AS player2_name 
                 FROM pairings p
                 JOIN players p1 ON p.player1_id = p1.id
                 JOIN players p2 ON p.player2_id = p2.id
-                WHERE p.round_number = %s
+                WHERE p.round_number = %s AND p.result IS NULL
             """, (latest_round,))
 
             pairings = cursor.fetchall()
@@ -331,6 +339,19 @@ def submit_results():
         except Exception as e:
             logging.error(f"Error occurred while submitting results: {e}")
             return "An error occurred while submitting the results. Please try again later."
+        
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+        SELECT p1.name AS player1_name, p2.name AS player2_name, pairing.id
+        FROM pairings pairing
+        JOIN players p1 ON pairing.player1_id = p1.id
+        JOIN players p2 ON pairing.player2_id = p2.id
+        WHERE pairing.round_number = (SELECT MAX(round_number) FROM pairings)
+        ''')
+        pairings = cursor.fetchall()
+
+    return render_template('submit_results.html', pairings=pairings)
 
     with get_connection() as conn:
         cursor = conn.cursor()
@@ -344,6 +365,34 @@ def submit_results():
         pairings = cursor.fetchall()
 
     return render_template('submit_results.html', pairings=pairings)
+
+@app.route('/teams')
+def team_selection():
+    teams = {}
+    team_files = os.listdir('teams')
+
+    for file_name in team_files:
+        if file_name.endswith('.json'):
+            team_name = file_name.replace('.json', '').replace('_', ' ').title()
+            teams[team_name] = file_name
+
+    return render_template('team_selection.html', teams=teams)
+
+@app.route('/teams/<team_name>', methods=['GET'])
+def team_data(team_name):
+    try:
+        # Sanitize the team_name parameter to prevent directory traversal attacks
+        team_name = os.path.basename(team_name).replace('.json', '').replace('_', ' ').title()
+
+        # Convert the sanitized team_name to a file name
+        file_name = team_name.replace(' ', '_').lower() + '.json'
+
+        with open(f'teams/{file_name}', 'r') as file:
+            team_data = json.load(file)
+            return render_template('team_data.html', team_name=team_name, team_data=team_data)
+    except FileNotFoundError:
+        return f"Team '{team_name}' not found", 404
+
 
 if __name__ == "__main__":
     create_database()

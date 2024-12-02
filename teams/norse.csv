@@ -1,0 +1,8 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Norse Raider Lineman,50000,6,3,3,4,8,"Block, Drunkard, Thick Skull",G,APS
+0-2,Beer Boars,20000,5,1,3,–,6,"Dodge, No Hands, Pick-me-up, Stunty, Titchy",–,A
+0-2,Norse Berserker,90000,6,3,3,5,8,"Block, Frenzy, Jump Up",GS,AP
+0-2,Valkyrie,95000,7,3,3,3,8,"Catch, Dauntless, Pass, Strip Ball",AGP,S
+0-2,Ulfwerener,105000,6,4,4,–,9,Frenzy,GS,A
+0-1,Yhetee / Snow Troll,140000,5,5,4,–,9,"Claws, Disturbing Presence, Frenzy, Loner (4+), Unchannelled Fury",S,AG
+0-8,ReRolls,60000,,,,,,Apothecary: Yes,,

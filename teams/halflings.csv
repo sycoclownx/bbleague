@@ -1,0 +1,6 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-16,Hopeful,30000,5,2,3,4,7,"Dodge, Right Stuff, Stunty",A,GS
+0-2,Hefty,50000,5,2,3,3,8,"Dodge, Fend, Stunty",AP,GS
+0-2,Catcher,55000,5,2,3,5,7,"Catch, Dodge, Right Stuff, Sprint, Stunty",A,GS
+0-2,Altern Forest Treeman,120000,2,6,5,5,11,"Mighty Blow (+1), Stand Firm, Strong Arm, Take Root, Thick Skull, Throw Team Mate, Timmm-ber!",S,AGP
+0-8,ReRolls,60000,,,,,,Apothecary: Yes,,

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Selection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1>Blood Bowl League Management</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/add_player">Add Player</a></li>
+                <li><a href="/players">View Players</a></li>
+                <li><a href="/teams">View Teams</a></li>
+                <li><a href="/pairings">View Pairings</a></li>
+                <li><a href="/results">View Results</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Team Selection</h2>
+        <p>Select a team to view its details:</p>
+        <ul style="list-style-type: none;">
+            {% for team_name, file_name in teams.items() | sort %}
+                <li>
+                    <a href="{{ url_for('team_data', team_name=team_name.lower().replace(' ', '_')) }}">{{ team_name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if team_data %}
+            <h3>Team Details:</h3>
+            <ul style="list-style-type: none;">
+                <li><strong>Team Name:</strong> {{ team_name }}</li>
+                <!-- Add more details here as per the structure of the team data -->
+            </ul>
+        {% endif %}
+    </main>
+</body>
+</html>

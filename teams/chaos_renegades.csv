@@ -1,0 +1,12 @@
+QTY,Position,Cost,MA,ST,AG,PA,AV,Skills and Traits,Pri,Sec
+0-12,Lineman,50000,6,3,3,4,9,–,GM,AS
+0-1,Thrower,75000,6,3,3,3,9,"Animosity (all team-mates), Pass, Safe Pair of Hands",GMP,AS
+0-1,Goblin,40000,6,2,3,4,8,"Animosity (all team-mates), Dodge, Right Stuff, Stunty",AM,GP
+0-1,Orc,50000,5,3,3,5,10,Animosity (all team-mates),GM,AS
+0-1,Skaven,50000,7,3,3,4,8,Animosity (all team-mates),GM,AS
+0-1,Dark Elf,75000,6,3,2,3,9,Animosity (all team-mates),AGM,PS
+0-1,Renegade Troll,115000,4,5,5,5,10,"Always Hungry, Loner (4+), Mighty Blow (+1), Projectile Vomit, Really Stupid, Regeneration, Throw Team Mate",S,AGM
+0-1,Renegade Ogre,140000,5,5,4,5,10,"Bone Head, Loner (4+), Mighty Blow (+1), Thick Skull, Throw Team Mate",S,AGM
+0-1,Renegade Minotaur,150000,5,5,4,–,9,"Loner (4+), Frenzy, Horns, Mighty Blow (+1), Thick Skull, Unchannelled Fury",S,AGM
+0-1,Renegade Rat Ogre,150000,6,5,4,–,9,"Animal Savagery, Frenzy, Loner (4+), Mighty Blow (+1), Prehensile Tail",S,AGM
+0-8,ReRolls,70000,,,,,,Apothecary: Yes,,
